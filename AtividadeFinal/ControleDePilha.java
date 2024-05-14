@@ -1,3 +1,12 @@
+/*
+ * Disciplina Programação Orientada a Objetos
+ * Autores:
+ *      Matheus Gomes Lima RA 201566
+ *      Felipe Ambruste Credendio  RA 
+ *      Nicolas Ferreira da Silva  RA 
+ * Atividade Final 3EC
+ * Data 13/04/2024
+ */
 package AtividadeFinal;
 
 import java.util.LinkedList;

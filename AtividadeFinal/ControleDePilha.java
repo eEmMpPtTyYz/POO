@@ -39,9 +39,11 @@ public class ControleDePilha {
                     consultorio.criaSenha(TipoLista.NORMAL);
                     break;
                 case 2:
+                    System.out.println("Senha de prioridade urgente criada\n");
                     consultorio.criaSenha(TipoLista.URGENTE);
                     break;
                 case 3:
+                    System.out.println("Senha de prioridade idoso criada\n");
                     consultorio.criaSenha(TipoLista.IDOSO);
                     break;
                 case 4:

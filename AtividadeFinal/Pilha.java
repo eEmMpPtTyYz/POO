@@ -1,4 +1,3 @@
-package AtividadeFinal;
 /*
  * Disciplina Programação Orientada a Objetos
  * Autores:
@@ -8,6 +7,7 @@ package AtividadeFinal;
  * Atividade Final 3EC
  * Data 13/04/2024
  */
+package AtividadeFinal;
 
 import java.util.LinkedList;
 import java.util.List;

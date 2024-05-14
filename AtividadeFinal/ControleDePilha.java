@@ -31,7 +31,7 @@ public class ControleDePilha {
 
 
             int opcao = scanner.nextInt();
-            scanner.nextLine();  // Consumir a nova linha após o próximo inteiro
+            scanner.nextLine();  
 
             switch (opcao) {
                 case 1:

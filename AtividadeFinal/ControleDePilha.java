@@ -19,7 +19,7 @@ public class ControleDePilha {
         Pilha consultorio = new Pilha();
         Scanner scanner = new Scanner(System.in);
 
-        while (true) {
+        while (true) { // adicionar mais opções
             System.out.println("\nBem Vindo ao consultório do Dr. No Problem, CRM 01.892");
             System.out.println("Escolha uma opção:");
             System.out.println("1. Gerar senha comum");
@@ -33,7 +33,7 @@ public class ControleDePilha {
             int opcao = scanner.nextInt();
             scanner.nextLine();  
 
-            switch (opcao) {
+            switch (opcao) { // adicionar mais opções
                 case 1:
                     System.out.println("Senha de prioridade normal criada\n");
                     consultorio.criaSenha(TipoLista.NORMAL);

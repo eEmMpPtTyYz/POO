@@ -17,7 +17,12 @@ public class Pilha extends EstrategiaLIFO {
 
     protected static TipoLista tipo;
     
-    private LinkedList<Senha> fila = new LinkedList<Senha>();
+    private LinkedList<Senha> filaNomal = new LinkedList<Senha>();
+    private LinkedList<Senha> filaPreferencial = new LinkedList<Senha>();
+    private LinkedList<Senha> filaUrgente = new LinkedList<Senha>();
+    private LinkedList<Senha> filaIdoso = new LinkedList<Senha>();
+    private LinkedList<Senha> filaIdoso80 = new LinkedList<Senha>();
+    private LinkedList<Senha> filaVip = new LinkedList<Senha>();
 
     
 
@@ -26,7 +31,7 @@ public class Pilha extends EstrategiaLIFO {
     public void criaSenha(TipoLista type){
         
         tipo = type;
-        inserir();  
+        inserir();
     }
 
     
@@ -35,29 +40,48 @@ public class Pilha extends EstrategiaLIFO {
     public String inserir() {
         Senha senha = new Senha();
         senha.gerarSenha();
-        System.out.println("Sua senha: " + senha.retornarSenha());
-        if(tipo == TipoLista.URGENTE){
-            fila.addFirst(senha);
-        }else{
-            fila.add(senha);
+        System.out.println("Sua senha: ");
+        if(tipo == TipoLista.NORMAL){
+            filaNomal.add(senha);
+
+        }else if(tipo == TipoLista.URGENTE){
+            filaUrgente.add(senha);
+        }else if(tipo == TipoLista.VIP){
+            filaVip.add(senha);
+        }else if(tipo == TipoLista.IDOSO){
+            filaIdoso.add(senha);
+        }else if(tipo == TipoLista.IDOSO80){
+            filaIdoso80.add(senha);
+        }else if(tipo == TipoLista.PREFERENCIAL){
+            filaPreferencial.add(senha);
         }
-        
-        return senha.retornarSenha();
+        System.out.println(tipo.tipo +" "+ senha.retornarSenha());
+        return tipo.tipo+ " " + senha.retornarSenha();
     }
 
     @Override
-    public void remover() {
+    public void remover() { //?
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'inserir'");
     }
 
     @Override
     public String chamar() {
-        if (fila.isEmpty()){
-            return "a fila esta vazia";
+        if (!filaUrgente.isEmpty()){
+            return "chamando: URG " + filaUrgente.poll().retornarSenha();
+        }else if (!filaIdoso80.isEmpty()){
+            return "chamando: I80 " + filaIdoso80.poll().retornarSenha();
+        }else if (!filaIdoso.isEmpty()){
+            return "chamando: I60 " + filaIdoso.poll().retornarSenha();
+        }else if (!filaPreferencial.isEmpty()){
+            return "chamando: PFL " + filaPreferencial.poll().retornarSenha();
+        }else if (!filaVip.isEmpty()){
+            return "chamando: VIP " + filaVip.poll().retornarSenha();
+        }else if (!filaNomal.isEmpty()){
+            return "chamando: NML " + filaNomal.poll().retornarSenha();
         }
          
-        return "chamando: " + fila.poll().retornarSenha();
+        return "Não tem ninguem na fila";
     }
 
     @Override
@@ -67,8 +91,8 @@ public class Pilha extends EstrategiaLIFO {
     }
 
     @Override
-    public String listar() {
-        return fila.toString();
+    public String listar() { //adicionar as outras filas
+        return filaUrgente.toString() + filaNomal.toString();
     }
     
 }

@@ -60,7 +60,7 @@ public class ControleDePilha {
                     break;
                 default:
                     consultorio.criaSenha(TipoLista.NORMAL);
-                    System.out.println("Opção inválida. Por favor, escolha novamente.");
+
             }
         }
     }

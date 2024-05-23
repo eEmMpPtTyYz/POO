@@ -2,97 +2,80 @@
  * Disciplina Programação Orientada a Objetos
  * Autores:
  *      Matheus Gomes Lima RA 201566
- *      Felipe Ambruste Credendio  RA 
- *      Nicolas Ferreira da Silva  RA 
+ *      Felipe Ambruste Credendio  RA 197067
+ *      Nicolas Ferreira da Silva  RA 194614
  * Atividade Final 3EC
  * Data 13/04/2024
  */
 package AtividadeFinal;
 
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+
 
 public class Pilha extends EstrategiaLIFO {
 
-    protected static TipoLista tipo;
-    
-    private LinkedList<Senha> filaNomal = new LinkedList<Senha>();
-    private LinkedList<Senha> filaPreferencial = new LinkedList<Senha>();
-    private LinkedList<Senha> filaUrgente = new LinkedList<Senha>();
-    private LinkedList<Senha> filaIdoso = new LinkedList<Senha>();
-    private LinkedList<Senha> filaIdoso80 = new LinkedList<Senha>();
-    private LinkedList<Senha> filaVip = new LinkedList<Senha>();
+    private final TipoLista tipo;
 
-    
+    private final LinkedList<Senha> pilha;
 
-   
 
-    public void criaSenha(TipoLista type){
-        
+
+
+    public Pilha(TipoLista type) {
         tipo = type;
-        inserir();
+        pilha = new LinkedList<Senha>();
     }
 
-    
 
     @Override
     public String inserir() {
         Senha senha = new Senha();
         senha.gerarSenha();
-        System.out.println("Sua senha: ");
-        if(tipo == TipoLista.NORMAL){
-            filaNomal.add(senha);
+        pilha.addFirst(senha);
 
-        }else if(tipo == TipoLista.URGENTE){
-            filaUrgente.add(senha);
-        }else if(tipo == TipoLista.VIP){
-            filaVip.add(senha);
-        }else if(tipo == TipoLista.IDOSO){
-            filaIdoso.add(senha);
-        }else if(tipo == TipoLista.IDOSO80){
-            filaIdoso80.add(senha);
-        }else if(tipo == TipoLista.PREFERENCIAL){
-            filaPreferencial.add(senha);
-        }
-        System.out.println(tipo.tipo +" "+ senha.retornarSenha());
-        return tipo.tipo+ " " + senha.retornarSenha();
+        return "Senha gerada:\n"+ tipo.tipo+ "-" + senha.retornarSenha();
+    }
+
+    public boolean taVazia(){
+        return (pilha.isEmpty());
     }
 
     @Override
     public void remover() { //?
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'inserir'");
+        pilha.removeFirst();
     }
 
     @Override
     public String chamar() {
-        if (!filaUrgente.isEmpty()){
-            return "chamando: URG " + filaUrgente.poll().retornarSenha();
-        }else if (!filaIdoso80.isEmpty()){
-            return "chamando: I80 " + filaIdoso80.poll().retornarSenha();
-        }else if (!filaIdoso.isEmpty()){
-            return "chamando: I60 " + filaIdoso.poll().retornarSenha();
-        }else if (!filaPreferencial.isEmpty()){
-            return "chamando: PFL " + filaPreferencial.poll().retornarSenha();
-        }else if (!filaVip.isEmpty()){
-            return "chamando: VIP " + filaVip.poll().retornarSenha();
-        }else if (!filaNomal.isEmpty()){
-            return "chamando: NML " + filaNomal.poll().retornarSenha();
+        if(!taVazia()){
+            pilha.getFirst().setChamado();
+            return "chamando:\n"+ tipo.tipo + "-" + pilha.getFirst().retornarSenha();
         }
-         
-        return "Não tem ninguem na fila";
+        return "A pilha esta vazia";
     }
 
     @Override
     public String atender() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'atender'");
+        String atendendo = "Atendendo: \n" + tipo.tipo + "-" + pilha.getFirst().retornarSenha();
+        if(!pilha.getFirst().getChamado()){
+            return "A Senha não foi chamada";
+        }
+        remover();
+        return atendendo;
     }
 
     @Override
-    public String listar() { //adicionar as outras filas
-        return filaUrgente.toString() + filaNomal.toString();
+    public String listar() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(tipo.tipo+"(").append(pilha.size()).append("): ").append(getSenhas(pilha)).append("\n");
+        return sb.toString();
     }
-    
+
+    private String getSenhas(LinkedList<Senha> p) {
+        StringBuilder sb = new StringBuilder();
+        for (Senha senha : p) {
+            sb.append(tipo.tipo + "-" + senha.retornarSenha()).append(", ");
+        }
+        return sb.toString().trim();
+    }
 }

@@ -88,7 +88,7 @@ public class Pilha extends EstrategiaLIFO {
         } else if (type == TipoLista.IDOSO) {
             COLOR = "\033[0;34m";
         } else if (type == TipoLista.PREFERENCIAL){
-            COLOR = "\033[0;32m";
+            COLOR = "\033[0;36m";
         } else if (type == TipoLista.VIP) {
             COLOR = "\033[0;33m";
         } else if (type == TipoLista.NORMAL){

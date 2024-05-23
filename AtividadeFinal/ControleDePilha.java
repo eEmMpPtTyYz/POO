@@ -76,7 +76,7 @@ public class ControleDePilha {
                     }
                     break;
                 case 8:
-                    if(!urgente.taVazia()){
+                    if (!urgente.taVazia()){
                         System.out.println(urgente.atender());
                     } else if (!idoso80.taVazia()) {
                         System.out.println(idoso80.atender());

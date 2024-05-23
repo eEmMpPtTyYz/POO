@@ -18,12 +18,14 @@ public class Pilha extends EstrategiaLIFO {
 
     private final LinkedList<Senha> pilha;
 
-
+    private String COLOR = "\033[0m";
+    private String RESET = "\033[0m";
 
 
     public Pilha(TipoLista type) {
         tipo = type;
         pilha = new LinkedList<Senha>();
+        setColor(type);
     }
 
 
@@ -33,7 +35,7 @@ public class Pilha extends EstrategiaLIFO {
         senha.gerarSenha();
         pilha.addFirst(senha);
 
-        return "Senha gerada:\n"+ tipo.tipo+ "-" + senha.retornarSenha();
+        return "Senha gerada:\n"+ COLOR + tipo.tipo+ "-" + senha.retornarSenha() + RESET;
     }
 
     public boolean taVazia(){
@@ -49,14 +51,14 @@ public class Pilha extends EstrategiaLIFO {
     public String chamar() {
         if(!taVazia()){
             pilha.getFirst().setChamado();
-            return "chamando:\n"+ tipo.tipo + "-" + pilha.getFirst().retornarSenha();
+            return "chamando:\n"+ COLOR + tipo.tipo + "-" + pilha.getFirst().retornarSenha() + RESET;
         }
         return "A pilha esta vazia";
     }
 
     @Override
     public String atender() {
-        String atendendo = "Atendendo: \n" + tipo.tipo + "-" + pilha.getFirst().retornarSenha();
+        String atendendo = "Atendendo: \n"+ COLOR + tipo.tipo + "-" + pilha.getFirst().retornarSenha() + RESET;
         if(!pilha.getFirst().getChamado()){
             return "A Senha não foi chamada";
         }
@@ -77,5 +79,20 @@ public class Pilha extends EstrategiaLIFO {
             sb.append(tipo.tipo + "-" + senha.retornarSenha()).append(", ");
         }
         return sb.toString().trim();
+    }
+    private void setColor(TipoLista type){
+        if(type == TipoLista.URGENTE){
+            COLOR = "\033[0;31m";
+        } else if (type == TipoLista.IDOSO80) {
+            COLOR = "\033[0;35m";
+        } else if (type == TipoLista.IDOSO) {
+            COLOR = "\033[0;34m";
+        } else if (type == TipoLista.PREFERENCIAL){
+            COLOR = "\033[0;32m";
+        } else if (type == TipoLista.VIP) {
+            COLOR = "\033[0;33m";
+        } else if (type == TipoLista.NORMAL){
+            COLOR = "\033[0;32m";
+        }
     }
 }

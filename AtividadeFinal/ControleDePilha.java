@@ -10,20 +10,23 @@
 package AtividadeFinal;
 
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
 
 public class ControleDePilha {
     public static void main(String[] args) {
 
-        Pilha normal = new Pilha(TipoLista.NORMAL);
-        Pilha vip = new Pilha(TipoLista.VIP);
-        Pilha preferencial = new Pilha(TipoLista.PREFERENCIAL);
-        Pilha idoso = new Pilha(TipoLista.IDOSO);
-        Pilha idoso80 = new Pilha(TipoLista.IDOSO80);
-        Pilha urgente = new Pilha(TipoLista.URGENTE);
+        List<Pilha> pilhas = new ArrayList<>();
+        pilhas.add(new Pilha(TipoLista.URGENTE));      // Prioridade 1
+        pilhas.add(new Pilha(TipoLista.IDOSO80));      // Prioridade 2
+        pilhas.add(new Pilha(TipoLista.IDOSO));        // Prioridade 3
+        pilhas.add(new Pilha(TipoLista.PREFERENCIAL)); // Prioridade 4
+        pilhas.add(new Pilha(TipoLista.VIP));          // Prioridade 5
+        pilhas.add(new Pilha(TipoLista.NORMAL));       // Prioridade 6
 
         Scanner scanner = new Scanner(System.in);
 
-        while (true) { // adicionar mais opções
+        while (true) {
             System.out.println("\nBem Vindo ao consultório do Dr. No Problem, CRM 01.892");
             System.out.println("Escolha uma opção:");
             System.out.println("1. Gerar senha comum");
@@ -37,66 +40,36 @@ public class ControleDePilha {
             System.out.println("9. Para listar todas as senhas");
             System.out.println("0. Sair");
 
-
             int opcao = scanner.nextInt();
-            scanner.nextLine();  
+            scanner.nextLine();
 
-            switch (opcao) { // adicionar mais opções
+            switch (opcao) {
                 case 1:
-                    System.out.println(normal.inserir());
+                    System.out.println(pilhas.get(5).inserir());
                     break;
                 case 2:
-                    System.out.println(vip.inserir());
+                    System.out.println(pilhas.get(4).inserir());
                     break;
                 case 3:
-                    System.out.println(preferencial.inserir());
+                    System.out.println(pilhas.get(3).inserir());
                     break;
                 case 4:
-                    System.out.println(idoso.inserir());
+                    System.out.println(pilhas.get(2).inserir());
                     break;
                 case 5:
-                    System.out.println(idoso80.inserir());
+                    System.out.println(pilhas.get(1).inserir());
                     break;
                 case 6:
-                    System.out.println(urgente.inserir());
+                    System.out.println(pilhas.get(0).inserir());
                     break;
                 case 7:
-                    if(!urgente.taVazia()){
-                        System.out.println(urgente.chamar());
-                    } else if (!idoso80.taVazia()) {
-                        System.out.println(idoso80.chamar());
-                    } else if (!idoso.taVazia()) {
-                        System.out.println(idoso80.chamar());
-                    } else if (!preferencial.taVazia()){
-                        System.out.println(preferencial.chamar());
-                    } else if (!vip.taVazia()) {
-                        System.out.println(vip.chamar());
-                    } else if (!normal.taVazia()){
-                        System.out.println(normal.chamar());
-                    }
+                    chamarSenha(pilhas);
                     break;
                 case 8:
-                    if (!urgente.taVazia()){
-                        System.out.println(urgente.atender());
-                    } else if (!idoso80.taVazia()) {
-                        System.out.println(idoso80.atender());
-                    } else if (!idoso.taVazia()) {
-                        System.out.println(idoso80.atender());
-                    } else if (!preferencial.taVazia()){
-                        System.out.println(preferencial.atender());
-                    } else if (!vip.taVazia()) {
-                        System.out.println(vip.atender());
-                    } else if (!normal.taVazia()){
-                        System.out.println(normal.atender());
-                    }
+                    atenderSenha(pilhas);
                     break;
                 case 9:
-                    System.out.println(urgente.listar());
-                    System.out.println(idoso80.listar());
-                    System.out.println(idoso.listar());
-                    System.out.println(preferencial.listar());
-                    System.out.println(vip.listar());
-                    System.out.println(normal.listar());
+                    listarSenhas(pilhas);
                     break;
                 case 0:
                     System.out.println("Encerrando o programa.");
@@ -106,6 +79,32 @@ public class ControleDePilha {
                     System.out.println("Digite uma opção valida");
                     break;
             }
+        }
+    }
+    // 7
+    private static void chamarSenha(List<Pilha> pilhas) {
+        for (Pilha pilha : pilhas) {            
+            if (!pilha.taVazia()) {
+                System.out.println(pilha.chamar());
+                return;
+            }                           
+        }
+        System.out.println("Não há Senhas para chamar.");
+    }
+    // 8
+    private static void atenderSenha(List<Pilha> pilhas) {
+        for (Pilha pilha : pilhas) {
+            if (!pilha.taVazia() && pilha.getTopo().getChamado()) {
+                System.out.println(pilha.atender());
+                return;
+            }
+        }
+        System.out.println("A senha deve ser chamada primeiro");
+    }
+
+    private static void listarSenhas(List<Pilha> pilhas) {
+        for (Pilha pilha : pilhas) {
+            System.out.println(pilha.listar());
         }
     }
 }

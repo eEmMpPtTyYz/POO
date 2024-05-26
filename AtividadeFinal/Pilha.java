@@ -14,6 +14,8 @@ import java.util.LinkedList;
 
 public class Pilha extends EstrategiaLIFO {
 
+    
+
     private final TipoLista tipo;
 
     private final LinkedList<Senha> pilha;
@@ -26,6 +28,14 @@ public class Pilha extends EstrategiaLIFO {
         tipo = type;
         pilha = new LinkedList<Senha>();
         setColor(type);
+    }
+
+    TipoLista getTipo(){
+        return tipo;
+    }
+
+    public Senha getTopo(){
+        return pilha.getFirst();
     }
 
 
@@ -50,26 +60,27 @@ public class Pilha extends EstrategiaLIFO {
     @Override
     public String chamar() {
         if(!taVazia()){
-            pilha.getFirst().setChamado();
-            return "chamando:\n"+ COLOR + tipo.tipo + "-" + pilha.getFirst().retornarSenha() + RESET;
+            getTopo().setChamado();
+            return "chamando:\n"+ COLOR + tipo.tipo + "-" + getTopo().retornarSenha() + RESET;
         }
         return "A pilha esta vazia";
     }
 
     @Override
     public String atender() {
-        String atendendo = "Atendendo: \n"+ COLOR + tipo.tipo + "-" + pilha.getFirst().retornarSenha() + RESET;
-        if(!pilha.getFirst().getChamado()){
-            return "A Senha não foi chamada";
+        String atendendo = "Atendendo: \n"+ COLOR + tipo.tipo + "-" + getTopo().retornarSenha() + RESET;
+        if(getTopo().getChamado()){
+            remover();
+            return atendendo;
         }
-        remover();
-        return atendendo;
+        return "A Senha não foi chamada";
+        
     }
 
     @Override
     public String listar() {
         StringBuilder sb = new StringBuilder();
-        sb.append(tipo.tipo+"(").append(pilha.size()).append("): ").append(getSenhas(pilha)).append("\n");
+        sb.append(tipo.tipo+"(").append(pilha.size()).append("): "+ COLOR).append(getSenhas(pilha)).append("\n"+RESET);
         return sb.toString();
     }
 
